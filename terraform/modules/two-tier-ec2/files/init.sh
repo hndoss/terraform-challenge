@@ -4,4 +4,4 @@ function main() {
     echo "${MESSAGE}"
 }
 
-main "${@}"
+main

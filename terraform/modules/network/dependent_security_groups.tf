@@ -1,5 +1,5 @@
-resource "aws_security_group" "security_group" {
-  for_each = { for security_group in var.security_group_config : security_group.name => security_group }
+resource "aws_security_group" "dependent_security_groups" {
+  for_each = { for security_group in var.dependent_security_group_config : security_group.name => security_group }
 
   name        = each.value.name
   description = each.value.description
@@ -12,8 +12,8 @@ resource "aws_security_group" "security_group" {
       from_port       = ingress.value.from_port
       to_port         = ingress.value.to_port
       protocol        = ingress.value.protocol
-      cidr_blocks     = ingress.value.cidr_blocks != "" ? ingress.value.cidr_blocks : [""]
-      security_groups = ingress.value.security_groups != "" ? ingress.value.security_groups : [""]
+      cidr_blocks     = ingress.value.cidr_blocks
+      security_groups = ingress.value.security_groups
     }
   }
 
@@ -24,13 +24,13 @@ resource "aws_security_group" "security_group" {
       from_port       = egress.value.from_port
       to_port         = egress.value.to_port
       protocol        = egress.value.protocol
-      cidr_blocks     = egress.value.cidr_blocks != "" ? egress.value.cidr_blocks : [""]
-      security_groups = egress.value.security_groups != "" ? egress.value.security_groups : [""]
+      cidr_blocks     = egress.value.cidr_blocks
+      security_groups = egress.value.security_groups
     }
   }
 
   tags = {
-    Name    = local.name_prefix
+    Name    = each.value.name
     Project = var.project
   }
 }

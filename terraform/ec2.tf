@@ -7,7 +7,7 @@ module "two_tier_ec2" {
   public_autoscaling_groups = [
     {
       name             = "public",
-      image_id         = "this",
+      image_id         = "ami-0ca5c3bd5a268e7db"
       instance_type    = "t3.micro",
       ssh_key_name     = "terraform",
       min_size         = 1,
@@ -15,11 +15,12 @@ module "two_tier_ec2" {
       desired_capacity = 1,
       default_cooldown = 60,
       vpc_zone_identifier = [
-        module.dev_network.private_subnets_ids["public-network-1"],
-        module.dev_network.private_subnets_ids["public-network-2"],
+        module.network.public_subnets_ids["public-network-1"],
+        module.network.public_subnets_ids["public-network-2"],
+        module.network.public_subnets_ids["public-network-3"],
       ],
       security_groups = [
-        module.dev_network.security_group_ids["bastion"]
+        module.network.independent_security_group_ids["bastion"]
       ]
     }
   ]
@@ -27,7 +28,7 @@ module "two_tier_ec2" {
   private_autoscaling_groups = [
     {
       name             = "private",
-      image_id         = "this",
+      image_id         = "ami-0ca5c3bd5a268e7db"
       instance_type    = "t3.micro",
       ssh_key_name     = "terraform",
       min_size         = 1,
@@ -35,11 +36,12 @@ module "two_tier_ec2" {
       desired_capacity = 1,
       default_cooldown = 60,
       vpc_zone_identifier = [
-        module.dev_network.private_subnets_ids["private-network-1"],
-        module.dev_network.private_subnets_ids["private-network-2"],
+        module.network.private_subnets_ids["private-network-1"],
+        module.network.private_subnets_ids["private-network-2"],
+        module.network.private_subnets_ids["private-network-3"],
       ],
       security_groups = [
-        module.dev_network.security_group_ids["private"]
+        module.network.dependent_security_group_ids["private"]
       ]
     }
   ]

@@ -1,7 +1,3 @@
-# How To
-
-# Terraform Description
-
 ## Requirements
 
 No requirements.
@@ -16,8 +12,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| network | ../modules/network |  |
-| routes | ../modules/routes |  |
+| network | ./modules/network |  |
 | two_tier_ec2 | ./modules/two-tier-ec2 |  |
 
 ## Resources
@@ -40,4 +35,7 @@ No requirements.
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| sg | n/a |
+| subnets | n/a |

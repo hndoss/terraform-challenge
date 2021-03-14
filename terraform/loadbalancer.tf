@@ -3,12 +3,13 @@ resource "aws_lb" "loadbalancer" {
   load_balancer_type = "application"
 
   subnets = [
-    module.prod_network.public_subnets_ids["public-network-1"],
-    module.prod_network.public_subnets_ids["public-network-2"]
+    module.network.public_subnets_ids["public-network-1"],
+    module.network.public_subnets_ids["public-network-2"],
+    module.network.public_subnets_ids["public-network-3"],
   ]
 
   security_groups = [
-    module.prod_network.security_group_ids["loadbalancer"]
+    module.network.independent_security_group_ids["loadbalancer"]
   ]
 
   internal = false

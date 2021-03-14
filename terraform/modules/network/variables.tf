@@ -46,8 +46,28 @@ variable "private_subnets" {
   }]
 }
 
-variable "security_group_config" {
-  description = "Security groups configuration"
+variable "independent_security_group_config" {
+  description = "Security groups configuration that doesn't depend on any other security group"
+  type = set(object({
+    name        = string
+    description = string
+    ingress = set(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+    egress = set(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+  }))
+}
+
+variable "dependent_security_group_config" {
+  description = "Security groups configuration that depend on any other security group"
   type = set(object({
     name        = string
     description = string
