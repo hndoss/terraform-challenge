@@ -19,4 +19,4 @@ echo \
 sudo apt-get update
 sudo apt-get install docker-ce -y
 
-sudo docker run -d -p 80:80 nginx
+sudo docker run -d -p 80:80 --restart always nginx
