@@ -2,7 +2,9 @@ name: CI for Terraform
 on:
   push:
     branches:
+      - test
       - development
+      - main
 
 jobs:
   build:
