@@ -19,8 +19,4 @@ echo \
 sudo apt-get update
 sudo apt-get install docker-ce 
 
-sudo apt-get install nginx -y
-sudo systemctl start nginx
-sudo systemctl enable nginx
-
 sudo docker run -d -p 80:80 nginx
