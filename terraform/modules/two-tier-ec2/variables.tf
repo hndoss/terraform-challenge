@@ -39,3 +39,8 @@ variable "private_autoscaling_groups" {
     security_groups     = list(string)
   }))
 }
+
+variable "target_group_arns" {
+  description = "List of the Target group ARNS to register the private autoscaling group"
+  type        = list(string)
+}

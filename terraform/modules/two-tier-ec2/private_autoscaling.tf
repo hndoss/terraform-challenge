@@ -25,6 +25,7 @@ resource "aws_autoscaling_group" "private_autoscaling_group" {
   default_cooldown      = each.value.default_cooldown
   termination_policies  = ["OldestInstance"]
   protect_from_scale_in = false
+  target_group_arns = var.target_group_arns
 
   tag {
     key                 = "Name"

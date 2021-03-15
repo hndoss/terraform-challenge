@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo this > /home/ubuntu/test.txt
+echo thiss > /home/ubuntu/test.txt

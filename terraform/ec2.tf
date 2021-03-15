@@ -4,6 +4,10 @@ module "two_tier_ec2" {
   project     = var.project
   environment = var.environment
 
+  target_group_arns = [
+    aws_lb_target_group.target_group_3000.arn
+  ]
+
   public_autoscaling_groups = [
     {
       name             = "public",
