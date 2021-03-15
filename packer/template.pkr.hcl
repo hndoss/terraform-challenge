@@ -26,6 +26,6 @@ build {
   sources = ["source.amazon-ebs.ubuntu"]
 
   provisioner "shell" {
-    script = "./init.sh"
+    script = "${path.root}/init.sh"
   }
 }
