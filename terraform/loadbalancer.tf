@@ -20,16 +20,16 @@ resource "aws_lb" "loadbalancer" {
   }
 }
 
-resource "aws_lb_target_group" "target_group_3000" {
-  name     = "${var.project}-${var.environment}-3000"
+resource "aws_lb_target_group" "target_group_80" {
+  name     = "${var.project}-${var.environment}-80"
   vpc_id   = module.network.vpc_id
   protocol = "HTTP"
-  port     = 3000
+  port     = 80
 
   health_check {
     protocol            = "HTTP"
     path                = "/"
-    port                = 3000
+    port                = 80
     healthy_threshold   = 3
     unhealthy_threshold = 10
     timeout             = 5
@@ -50,6 +50,6 @@ resource "aws_lb_listener" "listener_80" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.target_group_3000.arn
+    target_group_arn = aws_lb_target_group.target_group_80.arn
   }
 }
