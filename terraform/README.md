@@ -1,3 +1,5 @@
+# Terraform Challenge
+
 # How To Use
 
 ``` 
@@ -5,6 +7,8 @@ export AWS_ACCESS_KEY_ID="XXXXX"
 export AWS_SECRET_ACCESS_KEY="XXXXX"
 export AWS_REGION=us-west-2
 export TERRAFORM_S3_BUCKET="acklen-terraform-state"
+
+cd terraform
 
 terraform init \
     -backend-config="bucket=${TERRAFORM_S3_BUCKET}" \
@@ -23,7 +27,10 @@ terraform apply \
     -var aws_region="${AWS_REGION}" \
     -var project="terraform" \
     -var environment="test" -auto-approve
+```
 
+## Clean everything
+```
 terraform destroy \
     -var aws_access_key_id="${AWS_ACCESS_KEY_ID}" \
     -var aws_secret_access_key="${AWS_SECRET_ACCESS_KEY}" \
