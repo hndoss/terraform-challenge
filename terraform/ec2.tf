@@ -28,7 +28,7 @@ module "two_tier_ec2" {
   private_autoscaling_groups = [
     {
       name             = "private",
-      image_id         = "ami-0ca5c3bd5a268e7db"
+      image_id         = data.aws_ami.ami.image_id
       instance_type    = "t3.micro",
       ssh_key_name     = "terraform",
       min_size         = 1,

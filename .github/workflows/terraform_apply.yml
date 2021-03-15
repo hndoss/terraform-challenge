@@ -1,0 +1,49 @@
+name: CI for Terraform
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Test
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out repository
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Build AMI
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-color=false -on-error=abort -force -var ami_name=terraform-challenge -var region=us-west-2"
+          target: ./packer/template.pkr.hcl
+        env:
+          PACKER_LOG: 1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.6
+
+      - name: Terraform Workflow
+        id: terraform
+        working-directory: ./terraform
+        run: |
+          terraform init \
+            -backend-config="bucket=${TERRAFORM_S3_BUCKET}" \
+            -backend-config="key=temp/terraform"
+
+          terraform plan \
+            -var aws_access_key_id="${AWS_ACCESS_KEY_ID}" \
+            -var aws_secret_access_key="${AWS_SECRET_ACCESS_KEY}" \
+            -var aws_region="${AWS_REGION}" \
+            -var project="terraform" \
+            -var environment="test"

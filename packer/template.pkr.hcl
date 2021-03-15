@@ -2,6 +2,10 @@ variable "ami_name" {
   type = string
 }
 
+variable "region" {
+  type = string
+}
+
 source "amazon-ebs" "ubuntu" {
   ami_name      = var.ami_name
   instance_type = "t2.micro"
@@ -19,7 +23,7 @@ source "amazon-ebs" "ubuntu" {
 }
 
 build {
-  sources = ["source.amazon-ebs.firstrun"]
+  sources = ["source.amazon-ebs.ubuntu"]
 
   provisioner "shell" {
     script = "./init.sh"
